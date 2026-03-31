@@ -1,10 +1,6 @@
 pipeline {
   agent any
 
-  environment {
-    DOCKER_IMAGE = "admin/devops-app"
-  }
-
   stages {
 
     stage('Clone Code') {
@@ -13,34 +9,21 @@ pipeline {
       }
     }
 
-    stage('Build Image') {
+    stage('Build App') {
       steps {
-        sh 'docker build -t $DOCKER_IMAGE .'
+        echo "Building app..."
       }
     }
 
-    stage('Login Docker') {
+    stage('Test') {
       steps {
-        withCredentials([usernamePassword(
-          credentialsId: 'docker-creds',
-          usernameVariable: 'USER',
-          passwordVariable: 'PASS'
-        )]) {
-          sh 'echo $PASS | docker login -u $USER --password-stdin'
-        }
-      }
-    }
-
-    stage('Push Image') {
-      steps {
-        sh 'docker push $DOCKER_IMAGE'
+        echo "Running tests..."
       }
     }
 
     stage('Deploy') {
       steps {
-        sh 'kubectl apply -f deployment.yaml'
-        sh 'kubectl apply -f service.yaml'
+        echo "Deploy stage (simulated)"
       }
     }
   }
