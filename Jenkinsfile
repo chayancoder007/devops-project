@@ -1,6 +1,10 @@
 pipeline {
   agent any
 
+  environment {
+    IMAGE_NAME = "yourdockerhub/devops-app"
+  }
+
   stages {
 
     stage('Clone Code') {
@@ -9,22 +13,11 @@ pipeline {
       }
     }
 
-    stage('Build App') {
+    stage('Build Docker Image') {
       steps {
-        echo "Building app..."
+        bat 'docker build -t %IMAGE_NAME% .'
       }
     }
 
-    stage('Test') {
-      steps {
-        echo "Running tests..."
-      }
-    }
-
-    stage('Deploy') {
-      steps {
-        echo "Deploy stage (simulated)"
-      }
-    }
   }
 }
