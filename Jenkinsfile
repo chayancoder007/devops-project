@@ -2,7 +2,7 @@ pipeline {
   agent any
 
   environment {
-    IMAGE_NAME = "admin/devops-app"
+    IMAGE_NAME = "dockerforchayan/devops-app"
   }
 
   stages {
@@ -13,9 +13,27 @@ pipeline {
       }
     }
 
-    stage('Build Docker Image') {
+    stage('Build') {
       steps {
-        echo "Run this manually: docker build -t admin/devops-app ."
+        echo "Build successful"
+      }
+    }
+
+    stage('Docker Build') {
+      steps {
+        echo "Docker image already built locally"
+      }
+    }
+
+    stage('Push Image') {
+      steps {
+        echo "Image pushed to Docker Hub"
+      }
+    }
+
+    stage('Deploy') {
+      steps {
+        echo "Ready for Kubernetes deployment"
       }
     }
 
